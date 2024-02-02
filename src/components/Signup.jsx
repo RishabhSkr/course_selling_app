@@ -2,11 +2,13 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';  
 import {Card,Typography} from '@mui/material';  
 import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-
-function Signup() {
+import { PropTypes } from 'prop-types';
+function Signup({setUserEmail}) {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
+    const navigate = useNavigate();
     return (
         <div >
             {email}  
@@ -62,7 +64,9 @@ function Signup() {
                         }).then(res=>{
                             const data = res.data;
                             localStorage.setItem('token',data.token);
-                            window.location="/"
+                            setUserEmail(email);
+                            navigate("/courses");
+                            // window.location="/"
                             console.log(data);
                         });
                         }}
@@ -73,4 +77,7 @@ function Signup() {
     )
   }
 
+Signup.propTypes= {
+    setUserEmail: PropTypes.func.isRequired
+};
   export default Signup;

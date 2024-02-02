@@ -1,35 +1,20 @@
 // Appbar.jsx
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom'; not working in in V6 react router dom
 import { useNavigate } from "react-router-dom";
-import  axios from 'axios';
+import { PropTypes } from 'prop-types';
+// import  axios from 'axios';
 
-function Appbar() {
-  const navigate = useNavigate();
-  const [userEmail,setEmail]=useState(null);
-
-    useEffect(()=>{
-      axios.get("http://localhost:3000/admin/me",{
-        headers:{
-          'Authorization':"Bearer "+localStorage.getItem('token')
-        }
-      }).then(res=>{
-        const data = res.data;
-        if(data.username){
-          setEmail(data.username);
-        }
-        console.log(data);
-      })
-    },[])
-
+function Appbar({userEmail, setUserEmail}) {
+  const navigate = useNavigate();    
     if(userEmail){
      
       return <div style={{
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between' 
       }}>
         <div >
           <Typography  style={{ fontFamily:"cursive",fontWeight:700,color:"#0E5FD4"}}variant={"h4"}> Coursera</Typography>
@@ -55,7 +40,8 @@ function Appbar() {
               variant="contained" 
               onClick={()=>{
                 localStorage.setItem("token",null);
-               window.location = "/"
+                setUserEmail(null);
+                // window.location = "/"
               }}
             >Logout</Button>
           
@@ -110,4 +96,8 @@ function Appbar() {
   );
 }
 
+Appbar.propTypes = {
+  userEmail: PropTypes.string,
+  setUserEmail: PropTypes.func
+};
 export default Appbar;

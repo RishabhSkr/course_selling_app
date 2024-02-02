@@ -4,25 +4,38 @@ import {Card,CardContent,Typography,TextField,Button,LinearProgress,Grid} from '
 import PropTypes from 'prop-types';
 import axios from 'axios';
 function Course() {
-    const {courseId}= useParams();  
-    const [courses, setCourses] = useState([]);
-
-    useEffect(()=>{
-      axios.get("http://localhost:3000/admin/courses", {
+  const {courseId}= useParams();  
+  const [courses, setCourses] = useState([]);
+  
+  useEffect(() => {
+    axios.get("http://localhost:3000/admin/courses", {
       headers: {
         'Authorization': "Bearer " + localStorage.getItem("token")
       },
-    }).then(res=>{
+    })
+    .then(res => {
       const data = res.data;
+      console.log("API Response courses:", data);
       setCourses(data);
     })
-
-    },[]);
-
-    let course = null;
+    .catch(error => {
+      console.error("API Error:", error);
+    
+    });
+  }, []);
   
-    for(let i = 0; i<courses.length;++i){
-      if(courses[i].id === Number(courseId)){
+  
+  let course = null;
+  console.log("Type of courseId:", typeof courseId);
+  if (courses.length > 0 && courses[0] && courses[0].id !== undefined) {
+    console.log("Type of courseId:", typeof courses[0].id);
+  } else {
+    console.error("Courses array is empty or does not have an 'id' property in the first element.");
+  }
+  for(let i = 0; i<courses.length;++i){
+    console.log("types ! ",typeof(courses[i].id));
+    console.log("types ! ",typeof(Number(courseId)));
+    if(courses[i].id === Number(courseId)){
         course = courses[i];
       }
     }
