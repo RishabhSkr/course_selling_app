@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {Card,CardContent,Typography,TextField,Button,LinearProgress,Grid} from '@mui/material';  
 import PropTypes from 'prop-types';
 import axios from 'axios';
+//TODO: one bug is courses is showing but courses[0] cannot aceesss : undefined or nulll
 function Course() {
   const {courseId}= useParams();  
   const [courses, setCourses] = useState([]);
