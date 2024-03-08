@@ -4,9 +4,14 @@ import Button from '@mui/material/Button';
 // import { Link } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom'; not working in in V6 react router dom
 import { useNavigate } from "react-router-dom";
+import { userEmailState } from '../store/selectors/userEmail';
+import { useRecoilValue } from 'recoil';
 import { PropTypes } from 'prop-types';
-export const Landing = ({userEmail}) => {
-        const navigate = useNavigate()
+
+
+export const Landing = () => {
+        const userMail = useRecoilValue(userEmailState)
+        const navigate = useNavigate();
         return <Grid container style={{padding: "5vw"}}>
         <Grid item xs={12} md={6} lg={6}>
             <div style={{marginTop: 100}}>
@@ -16,28 +21,28 @@ export const Landing = ({userEmail}) => {
                 <Typography variant={"h5"}>
                     A place to learn, earn and grow
                 </Typography>
-                {!userEmail && <div style={{display: "flex", marginTop: 20}}>
-                    <div style={{marginRight: 10}}>
-                        <Button
-                            size={"large"}
-                            variant={"contained"}
-                            onClick={() => {
-                                navigate("/signup")
-                            }}
-                        >Signup</Button>
-                    </div>
-                        <div>
+                {userMail==null &&  (
+                    <div style={{display: "flex", marginTop: 20}}>
+                        <div style={{marginRight: 10}}>
                             <Button
                                 size={"large"}
                                 variant={"contained"}
                                 onClick={() => {
-                                    navigate("/signin")
+                                    navigate("/signup")
                                 }}
-                            >Signin</Button>
+                            >Signup</Button>
                         </div>
-                    </div>}
-                </div>
-            <div>
+                            <div>
+                                <Button
+                                    size={"large"}
+                                    variant={"contained"}
+                                    onClick={() => {
+                                        navigate("/signin")
+                                    }}
+                                >Signin</Button>
+                            </div>
+                        </div>
+                        )}
             </div>
         </Grid>
             <Grid item xs={12} md={6} lg={6}  style={{marginTop: 20}}>

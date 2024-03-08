@@ -5,10 +5,13 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import { PropTypes } from 'prop-types';
-function Signup({setUserEmail}) {
+import {useSetRecoilState} from "recoil";
+import {userState} from "../store/atoms/user.js";
+function Signup() {
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const navigate = useNavigate();
+    const setUser = useSetRecoilState(userState);
     return (
         <div >
             {email}  
@@ -23,7 +26,6 @@ function Signup({setUserEmail}) {
                 <Card variant="outlined" style={{width:400,padding:20}}>
                     <TextField 
                     onChange={
-
                         (e)=>{
                             console.log(e);
                             setEmail(e.target.value);
@@ -64,8 +66,8 @@ function Signup({setUserEmail}) {
                         }).then(res=>{
                             const data = res.data;
                             localStorage.setItem('token',data.token);
-                            setUserEmail(email);
-                            navigate("/courses");
+                            setUser({userEmail:email,isLoading:false});
+                            navigate("/");
                             // window.location="/"
                             console.log(data);
                         });
@@ -78,6 +80,6 @@ function Signup({setUserEmail}) {
   }
 
 Signup.propTypes= {
-    setUserEmail: PropTypes.func.isRequired
+    setUserEmail: PropTypes.func
 };
   export default Signup;

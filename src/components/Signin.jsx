@@ -1,9 +1,10 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';  
 import {Card,Typography} from '@mui/material';  
-
+// import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 function Signin() {
+    // const navigate = useNavigate();
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     return (
@@ -58,7 +59,7 @@ function Signin() {
                         }).then(res=>{
                             res.json().then(data=>{
                                 localStorage.setItem('token',data.token);
-                                window.location="/"
+                                window.location = "/"
                                 console.log(data);
                             })
                         });

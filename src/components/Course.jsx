@@ -1,15 +1,21 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import {Card,CardContent,Typography,TextField,Button,LinearProgress,Grid} from '@mui/material';  
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import axios from 'axios';
+import { courseState } from "../store/atoms/course";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import { courseTitle, coursePrice, isCourseLoading, courseImage, courseDescription } from "../store/selectors/course";
+
 //TODO: one bug is courses is showing but courses[0] cannot aceesss : undefined or nulll
+
 function Course() {
-  const {courseId}= useParams();  
-  const [courses, setCourses] = useState([]);
+    let { courseId } = useParams();
+    const setCourse = useSetRecoilState(courseState);
+    const courseLoading = useRecoilValue(isCourseLoading);
   
   useEffect(() => {
-    axios.get("http://localhost:3000/admin/courses", {
+    axios.get(`http://localhost:3000/admin/courses/${courseId}`, {
       headers: {
         'Authorization': "Bearer " + localStorage.getItem("token")
       },
@@ -17,31 +23,26 @@ function Course() {
     .then(res => {
       const data = res.data;
       console.log("API Response courses:", data);
-      setCourses(data);
+      setCourse({isLoading: false, course: res.data.course});
     })
     .catch(error => {
       console.error("API Error:", error);
+      setCourse({isLoading: false, course: null});
     
     });
-  }, []);
+  }, [courseId, setCourse]);
   
   
-  let course = null;
-  console.log("Type of courseId:", typeof courseId);
-  if (courses.length > 0 && courses[0] && courses[0].id !== undefined) {
-    console.log("Type of courseId:", typeof courses[0].id);
-  } else {
-    console.error("Courses array is empty or does not have an 'id' property in the first element.");
-  }
-  for(let i = 0; i<courses.length;++i){
-    console.log("types ! ",typeof(courses[i].id));
-    console.log("types ! ",typeof(Number(courseId)));
-    if(courses[i].id === Number(courseId)){
-        course = courses[i];
-      }
-    }
+  // let course = null;
+  // for(let i = 0; i<courses.length;++i){
+  //   console.log("types ! ",typeof(courses[i].id));
+  //   console.log("types ! ",typeof(Number(courseId)));
+  //   if(courses[i].id === Number(courseId)){
+  //       course = courses[i];
+  //     }
+  //   }
 
-  if(!course){
+  if(courseLoading){
     return <div>
     Loading...
      <LinearProgress  />
@@ -49,21 +50,21 @@ function Course() {
   }
   return <div>
 
-      <GrayTopper title={course.title}/>
+      <GrayTopper />
       <Grid container >
         <Grid item lg = {8} md = {12} sm ={12}>
-          <UpdateCourse courses={courses} course = {course} setCourses ={setCourses}/>
+          <UpdateCourse />
         </Grid>
         <Grid item lg = {4} md = {12} sm ={12}>
-          <CourseCard course = {course}/>
+          <CourseCard />
         </Grid>
-    
       </Grid>
   </div>
   
 }
 
-function GrayTopper({title}) {
+function GrayTopper() {
+  const title = useRecoilValue(courseTitle);
   return  <div style={{ zIndex: 0, top: 0, height: 250, width: "100vw", marginBottom: -250, background: "rgb(24,24,24)" }}>
             <div style={{ height: 250, display: "flex", justifyContent: "center", alignItems: "center" }}>
               <div>
@@ -74,19 +75,20 @@ function GrayTopper({title}) {
             </div>
           </div>
 }
-function UpdateCourse(props){
-  const [title,setTitle] = useState("");
-  const [description,setdescription] = useState("");
-  const [Price,setPrice] = useState("");
-  const [image, setImage] = useState("");
-  const course = props.course;
+function UpdateCourse(){
+  const {courseId} = useParams();
+  const [courseDetails, setCourse] = useRecoilState(courseState);
+  const [title, setTitle] = useState(courseDetails.course.title);
+  const [description, setDescription] = useState(courseDetails.course.description);
+  const [image, setImage] = useState(courseDetails.course.imageLink);
+  const [Price, setPrice] = useState(courseDetails.course.price);
   
-  // update state initial input field when props.course changes
-  useEffect(()=>{
-    setTitle(course.title || '');
-    setdescription(course.description || '');
-    setImage(course.imageLink || '');
-  },[course])
+  // // update state initial input field when props.course changes
+  // useEffect(()=>{
+  //   setTitle(course.title || '');
+  //   setdescription(course.description || '');
+  //   setImage(course.imageLink || '');
+  // },[course])
 
   return(
       <div style={{display : "flex",justifyContent:"center"}}>          
@@ -111,7 +113,7 @@ function UpdateCourse(props){
                   />
                   <br/><br/>
                   <TextField 
-                  onChange={(e)=>{setdescription(e.target.value)}}
+                  onChange={(e)=>{setDescription(e.target.value)}}
                      
                       label="Course Description" 
                       variant="outlined" 
@@ -143,80 +145,83 @@ function UpdateCourse(props){
                   <Button
                       variant="contained"
                       onClick={() => {
-                        axios.put(`http://localhost:3000/admin/courses/${course.id}`, {    
-                          headers: {
-                            'Authorization': 'Bearer ' + localStorage.getItem("token")
-                          },
-                          body: JSON.stringify({
+                      
+                        axios.put(`http://localhost:3000/admin/courses/${courseId}`, 
+                          {
                             title: title,
                             description: description,
                             Price: Price,
                             imageLink: image,
                             published: true
-                          })
-                        })
+                          },
+                          {
+                            headers: {
+                              'Authorization': 'Bearer ' + localStorage.getItem("token"),
+                              'Content-Type': 'application/json' // Specify the content type
+                            }
+                          }
+                        )
                         .then(res => {
                             const data = res.data;
                             console.log(data);
                             // Update the courses array
-                            let updatedCourses = [];
-                            for (let i = 0; i < props.courses.length; i++) {
-                              if (props.courses[i].id === course.id) {
-                                updatedCourses.push({
-                                  id: course.id,
-                                  title: title,
-                                  description: description,
-                                  imageLink: image,
-                                  Price: Price
-                                });
-                              } else {
-                                updatedCourses.push(props.courses[i]);
-                              }
-                            }
+                            let updatedCourse = {
+                              id: courseDetails.course.id,
+                              title: title,
+                              description: description,
+                              imageLink: image,
+                              Price: Price
+                            };
                             // Update the state with the new courses array
-                            props.setCourses(updatedCourses);
-                          })
+                            setCourse({ course: updatedCourse, isLoading: false });
+                        })
+                        .catch(error => {
+                            console.error('Error updating course:', error);
+                        });
                       }}
-                >Update COURSE
+                >Update Course
                 </Button>
               </Card>
-              
           </div>
   )
 }
 
-function CourseCard(props){
+function CourseCard(){
+  const title = useRecoilValue(courseTitle);
+  const imageLink = useRecoilValue(courseImage);
+  const Price = useRecoilValue(coursePrice);
+  const description = useRecoilValue(courseDescription);
   return <div style={{display:"flex", justifyContent:"center"}}>
        <Card variant="outlined" style={{  margin: 10, width: 300, minHeight: 200 }}>
-          <img src={props.course.imageLink}style={{width:300, height:200}} />
+          <img src={imageLink}style={{width:300, height:200}} />
         <CardContent style={{alignItems:"center"}}>
         <Typography variant="h5"  >
-          {props.course.title}
+          {title}
         </Typography>
         <Typography>
-          {props.course.description}
+          {description}
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          Price: {props.course.Price}
+          Price: Rs.{Price}
         </Typography>
         </CardContent>
       </Card>
     </div>
 }
-CourseCard.propTypes={
-  course:PropTypes.object.isRequired,
+// CourseCard.propTypes={
+//   course:PropTypes.object.isRequired,
 
-}
+// }
 
-GrayTopper.propTypes={
-  title:PropTypes.object.isRequired,
+// GrayTopper.propTypes={
+//   title:PropTypes.object.isRequired,
 
-}
-UpdateCourse.propTypes={
-  course:PropTypes.object.isRequired,
-  courses:PropTypes.object.isRequired,
-  setCourses:PropTypes.object.isRequired,
+// }
+// UpdateCourse.propTypes={
+//   course:PropTypes.object.,
+//   courses:PropTypes.object,
+//   setCourses:PropTypes.object,
 
-}
+// }
 
 export default Course;

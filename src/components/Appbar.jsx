@@ -1,23 +1,34 @@
 // Appbar.jsx
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
-// import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 // import { useHistory } from 'react-router-dom'; not working in in V6 react router dom
 import { useNavigate } from "react-router-dom";
 import { PropTypes } from 'prop-types';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {userState} from '../store/atoms/user';
+import {userEmailState} from '../store/selectors/userEmail';
+import {isUserLoading} from '../store/selectors/isUserLoading';
 // import  axios from 'axios';
-
-function Appbar({userEmail, setUserEmail}) {
+function Appbar() {
   const navigate = useNavigate();    
-    if(userEmail){
+  const userLoading = useRecoilValue(isUserLoading);
+  const userEmail = useRecoilValue(userEmailState);
+  const setUser = useSetRecoilState(userState);
+  
+  if(userLoading){
+    return <></>
+  }  
+  if(userEmail){
      
       return <div style={{
         display: 'flex',
         justifyContent: 'space-between' 
       }}>
         <div >
-          <Typography  style={{ fontFamily:"cursive",fontWeight:700,color:"#0E5FD4"}}variant={"h4"}> Coursera</Typography>
+          <Typography  style={{ fontFamily:"cursive",fontWeight:700,color:"#0E5FD4"}}variant={"h4"}> 
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Coursera</Link>
+          </Typography>
         </div>
         <div style={{
           display: 'flex',
@@ -40,7 +51,10 @@ function Appbar({userEmail, setUserEmail}) {
               variant="contained" 
               onClick={()=>{
                 localStorage.setItem("token",null);
-                setUserEmail(null);
+                setUser({
+                  isLoading: false,
+                  userEmail:null
+                });
                 // window.location = "/"
               }}
             >Logout</Button>
@@ -53,8 +67,6 @@ function Appbar({userEmail, setUserEmail}) {
 
         </div>
       </div>
-          
-        
     }
 
   return (
@@ -64,7 +76,8 @@ function Appbar({userEmail, setUserEmail}) {
     }}>
       <div>
         <Typography style={{ fontFamily:"cursive",fontWeight:700,color:"#0E5FD4"}}variant={"h4"}
-          >   Coursera
+          > 
+          <Link style={{ textDecoration: 'none', color: 'inherit' }} to={'/'}>Coursera</Link>
         </Typography>
       </div>
       <div style={{
@@ -76,8 +89,8 @@ function Appbar({userEmail, setUserEmail}) {
 
           <Button
             variant="contained" 
-            onClick={()=>{
-              navigate('/login')
+            onClick={()=>{  
+              navigate('/signin')
             }}
           >Sign In</Button>
         
@@ -86,7 +99,7 @@ function Appbar({userEmail, setUserEmail}) {
           <Button variant="contained"
           // component={Link} to="/signup"
           onClick={()=>{
-              navigate('/signup')
+              navigate('/signup') 
             }}
           >Sign Up</Button>
           {/* <Button variant="contained" onClick={handleSignup} to="/signup">Sign Up</Button> */}
