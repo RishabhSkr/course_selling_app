@@ -40,12 +40,13 @@ function InitUser() {
   const setUser = useSetRecoilState(userState);
   const init = async() => {
       try {
-          const response = await axios.get(` http://localhost:3000/admin/me`, {
+          const response = await axios.get(`http://localhost:3000/admin/me`, {
               headers: {
                   "Authorization": "Bearer " + localStorage.getItem("token")
               }
           })
           if (response.data.username) {
+            console.log(response.data)
               setUser({
                   isLoading: false,
                   userEmail: response.data.username

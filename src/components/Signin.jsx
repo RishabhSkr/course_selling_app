@@ -1,12 +1,18 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';  
 import {Card,Typography} from '@mui/material';  
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { userState } from '../store/atoms/user';
 import { useState } from 'react';
+import axios from 'axios';
+
 function Signin() {
-    // const navigate = useNavigate();
-    const [email,setEmail] = useState("");
+    const navigate = useNavigate();
+    const [email,setEmail] = useRecoilState(userState);
     const [password,setPassword] = useState("");
+    const setUser= useSetRecoilState(userState);
+    // console.log(email,password)
     return (
 
         <div >
@@ -19,12 +25,9 @@ function Signin() {
             <div style={{display:'flex',justifyContent:'center'}}>           
                 <Card variant="outlined" style={{width:400,padding:20}}>
                     <TextField 
-                        onChange={
-                            (e)=>{
-                                console.log(e);
-                                setEmail(e.target.value);
-                            }
-                        }
+                        onChange={(e)=>{
+                            setEmail(e.target.value);
+                        }}
                         id="outlined-basic" 
                         label="Username" 
                         variant="outlined" 
@@ -36,7 +39,7 @@ function Signin() {
                     <TextField 
                     onChange={
                             (e)=>{
-                                console.log(e);
+                                // console.log(e);
                                 setPassword(e.target.value);
                             }
                         }
@@ -59,7 +62,12 @@ function Signin() {
                         }).then(res=>{
                             res.json().then(data=>{
                                 localStorage.setItem('token',data.token);
-                                window.location = "/"
+                                // window.location = "/"
+                                setUser({
+                                    userEmail:email,
+                                    isLoading:false
+                                })
+                                navigate("/");
                                 console.log(data);
                             })
                         });

@@ -1,10 +1,9 @@
 // Appbar.jsx
+import { PropTypes } from 'prop-types';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
-// import { useHistory } from 'react-router-dom'; not working in in V6 react router dom
 import { useNavigate } from "react-router-dom";
-import { PropTypes } from 'prop-types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {userState} from '../store/atoms/user';
 import {userEmailState} from '../store/selectors/userEmail';
@@ -15,7 +14,7 @@ function Appbar() {
   const userLoading = useRecoilValue(isUserLoading);
   const userEmail = useRecoilValue(userEmailState);
   const setUser = useSetRecoilState(userState);
-  
+  // console.log(userEmail)
   if(userLoading){
     return <></>
   }  
@@ -25,9 +24,11 @@ function Appbar() {
         display: 'flex',
         justifyContent: 'space-between' 
       }}>
-        <div >
-          <Typography  style={{ fontFamily:"cursive",fontWeight:700,color:"#0E5FD4"}}variant={"h4"}> 
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Coursera</Link>
+       <div>
+          <Typography style={{ fontFamily: "cursive", fontWeight: 700, color: "#0E5FD4" }} variant="h4">
+            <Link style={{ textDecoration: 'none', color: 'inherit' }} to="/">
+              Coursera
+            </Link>
           </Typography>
         </div>
         <div style={{
@@ -69,7 +70,8 @@ function Appbar() {
       </div>
     }
 
-  return (
+  else{
+    return (
     <div style={{
       display: 'flex',
       justifyContent: 'space-between'
@@ -107,6 +109,7 @@ function Appbar() {
       </div>
     </div>
   );
+}
 }
 
 Appbar.propTypes = {

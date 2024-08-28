@@ -1,21 +1,23 @@
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import adminRouter from './routes/admin.js';
+import userRouter from './routes/users.js';
+
 const app = express();
-const cors = require('cors');
-const mongoose = require('mongoose');
-const adminRouter = require("./routes/admin");
-const userRouter = require("./routes/users");
 
 app.use(cors());
 app.use(express.json());
 
+app.use('/admin', adminRouter);
+app.use('/user', userRouter);
 
-app.use("/admin",adminRouter);
-app.use("/user",userRouter);
-
-// TODO : Resolve a bug that same admin can sign as a user and can add courses as a user.Use diff secret or different function
+// TODO: Resolve a bug that same admin can sign as a user and can add courses as a user. Use different secret or different function
 
 // mongoose connect
-mongoose.connect('mongodb+srv://admin-Rishabh:<Password>@cluster0.jpn1sz9.mongodb.net/courses', {
+mongoose.connect('mongodb://localhost:27017/courses', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
 // Admin routes
@@ -24,6 +26,7 @@ mongoose.connect('mongodb+srv://admin-Rishabh:<Password>@cluster0.jpn1sz9.mongod
 app.listen(3000, () => {
   console.log('Server is listening on port 3000');
 });
+
 
 
 // const express = require('express');

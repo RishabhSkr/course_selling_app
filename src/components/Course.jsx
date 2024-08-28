@@ -7,7 +7,7 @@ import { courseState } from "../store/atoms/course";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import { courseTitle, coursePrice, isCourseLoading, courseImage, courseDescription } from "../store/selectors/course";
 
-//TODO: one bug is courses is showing but courses[0] cannot aceesss : undefined or nulll
+
 
 function Course() {
     let { courseId } = useParams();
@@ -15,7 +15,7 @@ function Course() {
     const courseLoading = useRecoilValue(isCourseLoading);
   
   useEffect(() => {
-    axios.get(`http://localhost:3000/admin/courses/${courseId}`, {
+    axios.get(`http://localhost:3000/admin/course/${courseId}`, {
       headers: {
         'Authorization': "Bearer " + localStorage.getItem("token")
       },
@@ -82,6 +82,7 @@ function UpdateCourse(){
   const [description, setDescription] = useState(courseDetails.course.description);
   const [image, setImage] = useState(courseDetails.course.imageLink);
   const [Price, setPrice] = useState(courseDetails.course.price);
+  // console.log(image)
   
   // // update state initial input field when props.course changes
   // useEffect(()=>{
@@ -105,11 +106,12 @@ function UpdateCourse(){
                           console.log(e);
                           setTitle(e.target.value);
                       }
-                  }
+                  }   type="text"
                       label="Course Title" 
                       variant="outlined" 
                       fullWidth = {true}
                       value={title}
+
                   />
                   <br/><br/>
                   <TextField 
@@ -150,7 +152,7 @@ function UpdateCourse(){
                           {
                             title: title,
                             description: description,
-                            Price: Price,
+                            price: Price,
                             imageLink: image,
                             published: true
                           },
@@ -170,7 +172,7 @@ function UpdateCourse(){
                               title: title,
                               description: description,
                               imageLink: image,
-                              Price: Price
+                              price: Price
                             };
                             // Update the state with the new courses array
                             setCourse({ course: updatedCourse, isLoading: false });
