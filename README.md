@@ -22,15 +22,15 @@
 - Website name changes to Koodle and APlly FontStyle -Rancho
 
 ## Frontend
-  Admin Side
-    - Created Login/Signup
-    - Created A Landing Page Admin Sign Up, Sign In Button
-    - Created AppBar Header Section- Show Course,Add Courses,Logout Button EmailId
-    - Created Courses Section-To Fetch All Courses From MONGODB of Admin
-    - created Add Course Component- To Add the course in DB.
-    - Created Course Component to show Detail of Course and Where Admin Can click on Edit Button to see course Details
-    - Created GrayTopper To show the Title of Course
-    - Created Course Card Component to see the course Details When Admin update the courses.
-    - Set Updated the course To the DB and Fetch the details using API
-    - Created Delete Button Course Option in each course to delete Course from DB
-    - Set MUI Loader  while Fetching the data from DB 
+  ### Admin Side
+      - Created Login/Signup
+      - Created A Landing Page Admin Sign Up, Sign In Button
+      - Created AppBar Header Section- Show Course,Add Courses,Logout Button EmailId
+      - Created Courses Section-To Fetch All Courses From MONGODB of Admin
+      - created Add Course Component- To Add the course in DB.
+      - Created Course Component to show Detail of Course and Where Admin Can click on Edit Button to see course Details
+      - Created GrayTopper To show the Title of Course
+      - Created Course Card Component to see the course Details When Admin update the courses.
+      - Set Updated the course To the DB and Fetch the details using API
+      - Created Delete Button Course Option in each course to delete Course from DB
+      - Set MUI Loader  while Fetching the data from DB 
