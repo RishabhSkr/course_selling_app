@@ -11,7 +11,6 @@ import { PropTypes } from 'prop-types';
 
 export const Landing = () => {
         const userMail = useRecoilValue(userEmailState)
-        console.log(userMail);
         const navigate = useNavigate();
         return <Grid container style={{padding: "5vw"}}>
         <Grid item xs={12} md={6} lg={6}>

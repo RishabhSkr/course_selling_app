@@ -22,9 +22,9 @@ function Courses() {
       .then((res) => res.json())
       .then((data) => {
         setCourses(data.courses);
-        // console.log(data);
       });
   }, [setCourses]);
+  
 
   return (
     <div  style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -38,7 +38,6 @@ function Courses() {
 function Course({ course }) {
   const navigate = useNavigate();
   const [, setCourses] = useRecoilState(coursesState);
-  console.log(course)
   const handleDeleteCourse = (courseId) => {
     
     fetch(`http://localhost:3000/admin/courses/${courseId}`, {
@@ -48,10 +47,9 @@ function Course({ course }) {
       },
     })
       .then((res) => res.json()) 
-      .then((data) => {
+      .then(() => {
         // Update the local state by removing the deleted course
         setCourses((prevCourses) => prevCourses.filter((course) => course._id !== courseId));
-        // console.log(data);
       })
       .catch((error) => {
         console.error('API Error:', error);
@@ -65,14 +63,15 @@ function Course({ course }) {
         <Typography variant="h5">{course.title}</Typography>
         <Typography>{course.description}</Typography>
         <Typography variant="body2" color="textSecondary">
-          Price: {course.Price}
+          Price: {course.price}
         </Typography>
       </CardContent>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 16px', marginTop: 'auto', marginBottom: 10 }}>
       <Button variant="contained" size="large" onClick={() => {
-                navigate(`/course/${course._id}`);
+                  navigate("/course/" + course._id);
         }}>Edit</Button>
+
         <Button size="small" variant="contained" startIcon={<DeleteIcon />} 
           onClick={()=>{
             handleDeleteCourse(course._id)

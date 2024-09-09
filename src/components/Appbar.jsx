@@ -14,9 +14,8 @@ function Appbar() {
   const userLoading = useRecoilValue(isUserLoading);
   const userEmail = useRecoilValue(userEmailState);
   const setUser = useSetRecoilState(userState);
-  // console.log(userEmail)
   if(userLoading){
-    return <></>
+    return <></>  
   }  
   if(userEmail){
      

@@ -14,8 +14,8 @@ function Signup() {
     const setUser = useSetRecoilState(userState);
     return (
         <div >
-            {email}  
-            {password}  
+            {/* {email}  
+            {password}   */}
             <div style={{paddingTop:140,marginBottom:10,display:'flex',justifyContent:'center'}}>
                 <Typography variant='h6'>
                     Welcome to Coursera.Sign Up to continue
@@ -27,7 +27,7 @@ function Signup() {
                     <TextField 
                     onChange={
                         (e)=>{
-                            console.log(e);
+                            // console.log(e);
                             setEmail(e.target.value);
                         }
                     }
@@ -38,7 +38,7 @@ function Signup() {
                     <br/><br/>
                     <TextField 
                     onChange={(e)=>{setPassword(e.target.value)}}
-                        id={"password"}
+                        id={"password"} 
                         label="Password" 
                         variant="outlined" 
                         type='password' 
@@ -49,7 +49,6 @@ function Signup() {
                     <Button variant="contained" onClick={() => {
                         // let username = document.getElementById('username').value;
                         // let password = document.getElementById('password').value;
-                        // console.log(username, password);
                         // fetch('http://localhost:3000/admin/signup', {
                         // method: 'POST',
                         // headers: {
@@ -69,7 +68,6 @@ function Signup() {
                             setUser({userEmail:email,isLoading:false});
                             navigate("/");
                             // window.location="/"
-                            console.log(data);
                         });
                         }}
                     >Sign Up</Button>

@@ -6,7 +6,7 @@ import {useState} from 'react';
 function AddCourse(){
     const [title,setTitle] = useState("");
     const [description,setdescription] = useState("");
-    const [Price,setPrice] = useState("");
+    const [price,setPrice] = useState(0);
     const [image, setImage] = useState("");
     return(
         <div>
@@ -43,14 +43,13 @@ function AddCourse(){
                     />
                     <br/><br/>
                     <TextField 
-                    onChange={(e)=>{setPrice(e.target.value)}}
-                       
-                        label="Course Price" 
-                        variant="outlined"
-                        type={Number}
-                        fullWidth={true}
-
-                    />
+                  onChange={(e)=>{setPrice(e.target.value)}}
+                     
+                      label="Course Price" 
+                      variant="outlined"
+                      fullWidth={true}
+                      
+                  />
                      <br/><br/>
                     <TextField 
                     onChange={(e)=>{setImage(e.target.value)}}
@@ -72,7 +71,7 @@ function AddCourse(){
                             body: JSON.stringify({ 
                                 title:title, 
                                 description:description,
-                                Price:Price,
+                                price:price,
                                 imageLink:image,
                                 published:true
                             })

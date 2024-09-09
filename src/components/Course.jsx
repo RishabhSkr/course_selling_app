@@ -21,8 +21,7 @@ function Course() {
       },
     })
     .then(res => {
-      const data = res.data;
-      console.log("API Response courses:", data);
+      // console.log("API Response courses:", res.data);
       setCourse({isLoading: false, course: res.data.course});
     })
     .catch(error => {
@@ -82,7 +81,6 @@ function UpdateCourse(){
   const [description, setDescription] = useState(courseDetails.course.description);
   const [image, setImage] = useState(courseDetails.course.imageLink);
   const [Price, setPrice] = useState(courseDetails.course.price);
-  // console.log(image)
   
   // // update state initial input field when props.course changes
   // useEffect(()=>{
@@ -103,7 +101,6 @@ function UpdateCourse(){
                    onChange={
                       
                       (e)=>{
-                          console.log(e);
                           setTitle(e.target.value);
                       }
                   }   type="text"
@@ -129,7 +126,6 @@ function UpdateCourse(){
                      
                       label="Course Price" 
                       variant="outlined"
-                      type={Number}
                       fullWidth={true}
                       
                   />
@@ -164,8 +160,6 @@ function UpdateCourse(){
                           }
                         )
                         .then(res => {
-                            const data = res.data;
-                            console.log(data);
                             // Update the courses array
                             let updatedCourse = {
                               id: courseDetails.course.id,

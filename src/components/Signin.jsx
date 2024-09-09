@@ -12,7 +12,6 @@ function Signin() {
     const [email,setEmail] = useRecoilState(userState);
     const [password,setPassword] = useState("");
     const setUser= useSetRecoilState(userState);
-    // console.log(email,password)
     return (
 
         <div >
@@ -39,7 +38,6 @@ function Signin() {
                     <TextField 
                     onChange={
                             (e)=>{
-                                // console.log(e);
                                 setPassword(e.target.value);
                             }
                         }

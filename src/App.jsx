@@ -10,10 +10,13 @@ import {useEffect} from 'react';
 import axios from 'axios';
 import { RecoilRoot,useSetRecoilState} from 'recoil';
 import {userState} from './store/atoms/user.js'
+import RecoilizeDebugger from 'recoilize';
+
 
 function App() {
   return (
       <RecoilRoot>
+      <RecoilizeDebugger/>
           <div style={{width: "100vw",
               height: "100vh",
               backgroundColor: "#eeeeee"}}
@@ -46,7 +49,6 @@ function InitUser() {
               }
           })
           if (response.data.username) {
-            console.log(response.data)
               setUser({
                   isLoading: false,
                   userEmail: response.data.username
