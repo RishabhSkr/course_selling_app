@@ -18,7 +18,7 @@ app.use('/user', userRouter);
 
 
 // mongoose connect
-mongoose.connect('mongodb://localhost:27017/courses', {
+mongoose.connect('mongodb+srv://admin-Rishabh:test123@cluster0.jpn1sz9.mongodb.net/courses', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });

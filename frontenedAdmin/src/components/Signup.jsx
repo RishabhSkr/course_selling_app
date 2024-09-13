@@ -24,7 +24,8 @@ function Signup() {
 
     const handleSignup = async () => {
         try {
-            const res = await axios.post('http://localhost:3000/admin/signup', {
+            const URL = `https://course-selling-app-a73w.onrender.com`
+            const res = await axios.post(`${URL}/admin/signup`, {
                 username: email,
                 password: password
             });

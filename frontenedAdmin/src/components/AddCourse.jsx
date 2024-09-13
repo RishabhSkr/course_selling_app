@@ -8,6 +8,8 @@ function AddCourse(){
     const [description,setdescription] = useState("");
     const [price,setPrice] = useState(0);
     const [image, setImage] = useState("");
+
+    const URL = `https://course-selling-app-a73w.onrender.com`
     return(
         <div>
             <div style={{paddingTop:140,marginBottom:10,display:'flex',justifyContent:'center'}}>
@@ -62,7 +64,7 @@ function AddCourse(){
                     />
                     <br/><br/>
                     <Button variant="contained" onClick={() => {
-                        fetch('http://localhost:3000/admin/courses/', {
+                        fetch(`${URL}/admin/courses/`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

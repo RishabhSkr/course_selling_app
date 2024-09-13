@@ -41,9 +41,10 @@ function App() {
 
 function InitUser() {
   const setUser = useSetRecoilState(userState);
+   const URL = `https://course-selling-app-a73w.onrender.com`
   const init = async() => {
       try {
-          const response = await axios.get(`http://localhost:3000/admin/me`, {
+          const response = await axios.get(`${URL}/admin/me`, {
               headers: {
                   "Authorization": "Bearer " + localStorage.getItem("token")
               }

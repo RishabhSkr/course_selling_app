@@ -13,9 +13,9 @@ function Course() {
     let { courseId } = useParams();
     const setCourse = useSetRecoilState(courseState);
     const courseLoading = useRecoilValue(isCourseLoading);
-  
-  useEffect(() => {
-    axios.get(`http://localhost:3000/admin/course/${courseId}`, {
+    useEffect(() => {
+    const URL = `https://course-selling-app-a73w.onrender.com`
+    axios.get(`${URL}/admin/course/${courseId}`, {
       headers: {
         'Authorization': "Bearer " + localStorage.getItem("token")
       },
@@ -81,7 +81,7 @@ function UpdateCourse(){
   const [description, setDescription] = useState(courseDetails.course.description);
   const [image, setImage] = useState(courseDetails.course.imageLink);
   const [Price, setPrice] = useState(courseDetails.course.price);
-  
+   const URL = `https://course-selling-app-a73w.onrender.com`
   // // update state initial input field when props.course changes
   // useEffect(()=>{
   //   setTitle(course.title || '');
@@ -144,7 +144,7 @@ function UpdateCourse(){
                       variant="contained"
                       onClick={() => {
                       
-                        axios.put(`http://localhost:3000/admin/courses/${courseId}`, 
+                        axios.put(`${URL}/admin/courses/${courseId}`, 
                           {
                             title: title,
                             description: description,

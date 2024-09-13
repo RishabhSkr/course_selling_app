@@ -22,7 +22,8 @@ function Courses() {
   }, [isUser, navigate]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/admin/courses', {
+     const URL = `https://course-selling-app-a73w.onrender.com`
+    fetch(`${URL}/admin/courses`, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -54,7 +55,8 @@ function Course({ course }) {
   const [, setCourses] = useRecoilState(coursesState);
 
   const handleDeleteCourse = (courseId) => {
-    fetch(`http://localhost:3000/admin/courses/${courseId}`, {
+    const URL = `https://course-selling-app-a73w.onrender.com`
+    fetch(`${URL}/admin/courses/${courseId}`, {
       method: 'DELETE',
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),
