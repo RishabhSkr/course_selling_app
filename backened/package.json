@@ -1,7 +1,7 @@
 {
-  "name": "04-course-app-hard",
+  "name": "course_selling_website",
   "version": "1.0.0",
-  "description": "### Description Functionally the same as 03-course-app-medium. Routes are the same as well. Rather than storing data in files, store them in MongoDB.  We will be covering this in the extra class next week but would be good for you to run ahead.",
+  "description": "create course selling website admin panel",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
