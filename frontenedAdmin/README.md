@@ -1,4 +1,4 @@
-# MERN Stack Course Selling Website [Live Demo](https://www.awesomescreenshot.com/video/30472435?key=9f1fc8331e9340e060ca4843343a092b "Live Demo")
+# MERN Stack Course Selling Website [Live Demo](https://course-selling-app-client.onrender.com "Live Demo")
 
 
 ## Features
@@ -10,7 +10,7 @@
         - Delete Courses
         - Edit Courses
         - Logout
-    - User Features
+    - TODO - User Features
         - See available courses
         - 
 ## Bug Fixes
