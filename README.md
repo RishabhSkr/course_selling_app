@@ -2,17 +2,34 @@
 
 
 ## Features
-    - Login Page
-    - Signup Page
-    - Admin Section
-        - Add Course
-        - List All Courses
-        - Delete Courses
-        - Edit Courses
-        - Logout
-    - TODO - User Features
-        - See available courses
-        - 
+- Role-Based Authentication:
+    - Users can access features specific to their roles.
+- Admin Section
+    - Add Course
+    - List All Courses
+    - Delete Courses
+    - Edit Courses
+    - Logout
+- Admin (Teacher) Features
+    - Create, edit, and delete their own courses.
+    - View courses created by others but cannot modify them.
+    - Signup requires a secret key for authentication.
+- SuperUser Features
+    - Manage admins and their courses.
+    - View and delete user details.
+    - Requires a secret key during signup for secure validation.
+- User Features
+    - Browse and purchase courses.
+    - View purchased courses (frontend pending).
+    - Enhanced Security
+    - JWT tokens with role-based claims.
+    - Secret keys for SuperUser and Admin signup.
+    - Environment variables for sensitive data.
+## Frontend Progress- Backened Done
+- Admin Panel: Created to manage admin tasks.
+- SuperUser and User Dashboards: Work in progress - User some part yet to be developed.
+
+
 ## Bug Fixes
 - Bug Fix-Fix Delete Function
 - Bug Fix- Login Page
@@ -20,6 +37,19 @@
 - Bug Fix- Price is not showing due to invalid type
 - UI Improvement - Added A favicon
 - Website name changes to Koodle and APlly FontStyle -Rancho
+
+# Installation Instructions
+- 1.Clone the Repository
+-     - git clone https://github.com/your-repo/koodle-rbac
+-     - cd koodle-rbac
+  2. Install Dependencies
+  3. Environment Variables-Create a .env file with the following variables:
+     - JWT_SECRET=<your_jwt_secret>
+     - JWT_SECRET_ADMIN=<your_admin_secret>
+     - JWT_SECRET_SUPERUSER=<your_superuser_secret>
+     - MONGO_URI=<your_mongodb_connection_string>
+  4. Run the server
+     - npm start
 
 ## Frontend
   ### Admin Side
