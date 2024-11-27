@@ -1,7 +1,6 @@
 # MERN Stack Course Selling Website [Live Demo](https://course-selling-app-client.onrender.com "Live Demo")
-
-
-## Features
+## Bug Due to not giving access to localStorage of renderer Some feature are not working that is Protecting route. Locally works fins.TODO-Resolve bug
+## Features 
 - Role-Based Authentication:
     - Users can access features specific to their roles.
 - Admin Section
