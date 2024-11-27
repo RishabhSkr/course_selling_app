@@ -4,11 +4,13 @@ import { Card, Typography, Snackbar } from '@mui/material';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { PropTypes } from 'prop-types';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../store/atoms/user.js';
+import { BASE_URL } from '../utils/config';
+import useRoleRedirect from '../Hooks/useRoleRedirect.js';
 
-function Signup() {
+function UserSignup() {
+    useRoleRedirect();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(""); // State for error message
@@ -24,8 +26,8 @@ function Signup() {
 
     const handleSignup = async () => {
         try {
-            const URL = `https://course-selling-app-a73w.onrender.com`
-            const res = await axios.post(`${URL}/admin/signup`, {
+            // const URL = `https://course-selling-app-a73w.onrender.com`
+            const res = await axios.post(`${BASE_URL}/users/u/signup`, {
                 username: email,
                 password: password
             });
@@ -35,10 +37,10 @@ function Signup() {
             setSuccess("Sign up successful! Redirecting...");
             setSeverity("success");
             setOpen(true);
-            setTimeout(() => navigate("/"), 2000); // Redirect after showing success message
+            setTimeout(() => navigate("/user"), 2000); // Redirect after showing success message
         } catch (err) {
             if (err.response && err.response.status === 403) {
-                setError("Admin already exists!");
+                setError("User already exists!");
                 setSeverity("error");
                 setOpen(true);
             } else {
@@ -53,7 +55,7 @@ function Signup() {
         <div>
             <div style={{ paddingTop: 140, marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
                 <Typography variant='h6'>
-                    Welcome to Coursera. Sign Up to continue
+                    Welcome to Koodle. Sign Up to continue
                 </Typography>
             </div>
 
@@ -94,8 +96,5 @@ function Signup() {
     )
 }
 
-Signup.propTypes = {
-    setUserEmail: PropTypes.func
-};
 
-export default Signup;
+export default UserSignup;

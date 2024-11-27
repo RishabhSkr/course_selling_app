@@ -1,21 +1,23 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import {Card,CardContent,Typography,TextField,Button,LinearProgress,Grid} from '@mui/material';  
-// import PropTypes from 'prop-types';
 import axios from 'axios';
 import { courseState } from "../store/atoms/course";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import { courseTitle, coursePrice, isCourseLoading, courseImage, courseDescription } from "../store/selectors/course";
-
-
+import { BASE_URL } from "../utils/config";
+import useRoleRedirect from "../Hooks/useRoleRedirect";
 
 function Course() {
+  
+  useRoleRedirect();
+
     let { courseId } = useParams();
     const setCourse = useSetRecoilState(courseState);
     const courseLoading = useRecoilValue(isCourseLoading);
     useEffect(() => {
-    const URL = `https://course-selling-app-a73w.onrender.com`
-    axios.get(`${URL}/admin/course/${courseId}`, {
+    // const URL = `https://course-selling-app-a73w.onrender.com`
+    axios.get(`${BASE_URL}/admin/course/${courseId}`, {
       headers: {
         'Authorization': "Bearer " + localStorage.getItem("token")
       },
@@ -30,16 +32,6 @@ function Course() {
     
     });
   }, [courseId, setCourse]);
-  
-  
-  // let course = null;
-  // for(let i = 0; i<courses.length;++i){
-  //   console.log("types ! ",typeof(courses[i].id));
-  //   console.log("types ! ",typeof(Number(courseId)));
-  //   if(courses[i].id === Number(courseId)){
-  //       course = courses[i];
-  //     }
-  //   }
 
   if(courseLoading){
     return <div>
@@ -81,7 +73,7 @@ function UpdateCourse(){
   const [description, setDescription] = useState(courseDetails.course.description);
   const [image, setImage] = useState(courseDetails.course.imageLink);
   const [Price, setPrice] = useState(courseDetails.course.price);
-   const URL = `https://course-selling-app-a73w.onrender.com`
+  //  const URL = `https://course-selling-app-a73w.onrender.com`
   // // update state initial input field when props.course changes
   // useEffect(()=>{
   //   setTitle(course.title || '');
@@ -143,8 +135,8 @@ function UpdateCourse(){
                   <Button
                       variant="contained"
                       onClick={() => {
-                      
-                        axios.put(`${URL}/admin/courses/${courseId}`, 
+                        
+                        axios.put(`${BASE_URL}/admin/courses/${courseId}`, 
                           {
                             title: title,
                             description: description,
@@ -159,14 +151,14 @@ function UpdateCourse(){
                             }
                           }
                         )
-                        .then(res => {
+                        .then( res => {
                             // Update the courses array
                             let updatedCourse = {
                               id: courseDetails.course.id,
                               title: title,
                               description: description,
                               imageLink: image,
-                              price: Price
+                              price: Price,
                             };
                             // Update the state with the new courses array
                             setCourse({ course: updatedCourse, isLoading: false });
@@ -204,20 +196,6 @@ function CourseCard(){
       </Card>
     </div>
 }
-// CourseCard.propTypes={
-//   course:PropTypes.object.isRequired,
 
-// }
-
-// GrayTopper.propTypes={
-//   title:PropTypes.object.isRequired,
-
-// }
-// UpdateCourse.propTypes={
-//   course:PropTypes.object.,
-//   courses:PropTypes.object,
-//   setCourses:PropTypes.object,
-
-// }
 
 export default Course;

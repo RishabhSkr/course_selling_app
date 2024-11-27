@@ -3,8 +3,10 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import adminRouter from './routes/admin.js';
 import userRouter from './routes/users.js';
-
+import superuserRouter from './routes/super.js'
 import dotenv from 'dotenv';
+import { DB_URI } from './config.js';
+
 dotenv.config();
 
 const app = express();
@@ -14,14 +16,12 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/admin', adminRouter);
-app.use('/user', userRouter);
+app.use('/users/u', userRouter);
+app.use('/superuser', superuserRouter);
 
 
 // mongoose connect
-mongoose.connect('mongodb+srv://admin-Rishabh:test123@cluster0.jpn1sz9.mongodb.net/courses', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+mongoose.connect(DB_URI);
 
 // Admin routes
 // User routes

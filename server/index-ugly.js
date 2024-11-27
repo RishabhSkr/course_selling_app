@@ -37,8 +37,8 @@ const authenticateJwt= (req,res,next)=>{
 };
 
 // mongoose connect
-
-mongoose.connect('mongodb+srv://admin-Rishabh:test123@cluster0.3dhqeuz.mongodb.net/courses', {
+  //DO NOT MISUSE THIS THANKYOU!!
+mongoose.connect('mongodb+srv://admin@cluster0.3dhqeuz.mongodb.net/courses', {
   
 });
 

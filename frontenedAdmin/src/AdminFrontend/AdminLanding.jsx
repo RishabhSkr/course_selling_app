@@ -1,16 +1,15 @@
 import { Typography,Grid } from '@mui/material';
 import Button from '@mui/material/Button';
-// import { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom'; not working in in V6 react router dom
 import { useNavigate } from "react-router-dom";
-import { userEmailState } from '../store/selectors/userEmail';
 import { useRecoilValue } from 'recoil';
-import { PropTypes } from 'prop-types';
+import { ADMIN_IMAGE_URL } from '../utils/config';
+import { adminEmailState } from '../store/selectors/adminEmail';
+import useRoleRedirect from '../Hooks/useRoleRedirect';
 
-
-export const Landing = () => {
-        const userMail = useRecoilValue(userEmailState)
+export const LandingAdmin = () => {
+        useRoleRedirect();
+        
+        const adminEmail = useRecoilValue(adminEmailState)
         const navigate = useNavigate();
         return <Grid container style={{padding: "5vw"}}>
         <Grid item xs={12} md={6} lg={6}>
@@ -21,14 +20,14 @@ export const Landing = () => {
                 <Typography variant={"h5"}>
                     A place to learn, earn and grow
                 </Typography>
-                {userMail==null &&  (
+                {adminEmail==null &&  (
                     <div style={{display: "flex", marginTop: 20}}>
                         <div style={{marginRight: 10}}>
                             <Button
                                 size={"large"}
                                 variant={"contained"}
                                 onClick={() => {
-                                    navigate("/signup")
+                                    navigate("/admin/signup")
                                 }}
                             >Signup</Button>
                         </div>
@@ -37,7 +36,7 @@ export const Landing = () => {
                                     size={"large"}
                                     variant={"contained"}
                                     onClick={() => {
-                                        navigate("/signin")
+                                        navigate("/admin/signin")
                                     }}
                                 >Signin</Button>
                             </div>
@@ -46,11 +45,9 @@ export const Landing = () => {
             </div>
         </Grid>
             <Grid item xs={12} md={6} lg={6}  style={{marginTop: 20}}>
-                <img src={"https://i.ytimg.com/vi/RtCKI27Uao4/hq720.jpg?sqp=-oaymwEXCK4FEIIDSFryq4qpAwkIARUAAIhCGAE=&rs=AOn4CLBNt5G7wIaevPAkAxpv0uFunitTUg  "} width={"100%"} />
+                <img src={ADMIN_IMAGE_URL} width={"100%"} />
             </Grid>
         </Grid> 
     }
-Landing.propTypes = {
-    userEmail : PropTypes.string
-}
-export default Landing;
+
+export default LandingAdmin;

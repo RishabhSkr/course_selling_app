@@ -3,11 +3,16 @@ import TextField from '@mui/material/TextField';
 import { Card, Typography, Snackbar } from '@mui/material';  
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
-import { userState } from '../store/atoms/user';
 import axios from 'axios';
+import { useSetRecoilState } from 'recoil';
+import { adminState } from '../store/atoms/admin.js';
+import {BASE_URL} from '../utils/config.js';
+import useRoleRedirect from '../Hooks/useRoleRedirect.js';
 
-function Signin() {
+function Signup() {
+    useRoleRedirect();
+    
+    const[adminKey, setAdminKey] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(""); // State for error message
@@ -15,35 +20,35 @@ function Signin() {
     const [open, setOpen] = useState(false); // State to control Snackbar visibility
     const [severity, setSeverity] = useState("success"); // State to control Snackbar severity
     const navigate = useNavigate();
-    const setUser = useSetRecoilState(userState);
+    const setUser = useSetRecoilState(adminState);
 
     const handleCloseSnackbar = () => {
         setOpen(false);
     };
 
-    const handleSignin = async () => {
-        const URL = `https://course-selling-app-a73w.onrender.com`
+    const handleSignup = async () => {
         try {
-            const res = await axios.post(`${URL}/admin/login`, {}, {
-                headers: {
-                    'username': email,
-                    'password': password
-                }
+            // const URL = `https://course-selling-app-a73w.onrender.com`
+            const res = await axios.post(`${BASE_URL}/admin/signup`, {
+                username: email,
+                password: password,
+                secret: adminKey
             });
             const data = res.data;
             localStorage.setItem('token', data.token);
-            setUser({ userEmail: email, isLoading: false });
-            setSuccess("Login successful! Redirecting...");
+            localStorage.setItem('adminId', data.adminId);
+            setUser({ adminEmail: email, isLoading: false });
+            setSuccess("Sign up successful! Redirecting...");
             setSeverity("success");
             setOpen(true);
-            setTimeout(() => navigate("/"), 2000); // Redirect after showing success message
+            setTimeout(() => navigate("/admin/courses"), 2000); // Redirect after showing success message
         } catch (err) {
-            if (err.response && err.response.status === 401) {
-                setError("Invalid username or password!");
+            if (err.response && err.response.status === 403) {
+                setError("Admin already exists!");
                 setSeverity("error");
                 setOpen(true);
             } else {
-                setError("An unexpected error occured! Try again");
+                setError("An unexpected error occurred!");
                 setSeverity("error");
                 setOpen(true);
             }
@@ -54,7 +59,7 @@ function Signin() {
         <div>
             <div style={{ paddingTop: 140, marginBottom: 10, display: 'flex', justifyContent: 'center' }}>
                 <Typography variant='h6'>
-                    Welcome back! Sign In to continue
+                    Welcome to Koodle. Sign Up to continue
                 </Typography>
             </div>
 
@@ -66,8 +71,7 @@ function Signin() {
                         variant="outlined" 
                         fullWidth 
                     />
-                    <br />
-                    <br />
+                    <br/><br/>
                     <TextField 
                         onChange={(e) => setPassword(e.target.value)}
                         label="Password" 
@@ -75,13 +79,20 @@ function Signin() {
                         type='password' 
                         fullWidth 
                     />
-                    <br />
-                    <br />
+                    <br/><br/>
+                    <TextField 
+                        onChange={(e) => setAdminKey(e.target.value)}
+                        label="Admin Key" 
+                        variant="outlined" 
+                        type='password' 
+                        fullWidth 
+                    />
+                    <br/><br/>
                     <Button 
                         variant="contained" 
-                        onClick={handleSignin}
+                        onClick={handleSignup}
                     >
-                        Login
+                        Sign Up
                     </Button>
                 </Card>
             </div>
@@ -97,4 +108,4 @@ function Signin() {
     )
 }
 
-export default Signin;
+export default Signup;
