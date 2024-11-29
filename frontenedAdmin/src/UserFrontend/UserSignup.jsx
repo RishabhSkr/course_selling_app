@@ -10,7 +10,7 @@ import { BASE_URL } from '../utils/config';
 import useRoleRedirect from '../Hooks/useRoleRedirect.js';
 
 function UserSignup() {
-    useRoleRedirect();
+    // useRoleRedirect();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(""); // State for error message

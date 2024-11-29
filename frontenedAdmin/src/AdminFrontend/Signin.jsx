@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';  
 import { Card, Typography, Snackbar } from '@mui/material';  
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { adminState } from '../store/atoms/admin';
@@ -9,7 +9,7 @@ import { BASE_URL } from '../utils/config';
 import axios from 'axios';
 import useRoleRedirect from '../Hooks/useRoleRedirect';
 function Signin() {
-    useRoleRedirect();
+    // useRoleRedirect();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(""); // State for error message

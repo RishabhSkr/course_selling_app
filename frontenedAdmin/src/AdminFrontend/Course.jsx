@@ -10,7 +10,7 @@ import useRoleRedirect from "../Hooks/useRoleRedirect";
 
 function Course() {
   
-  useRoleRedirect();
+  // useRoleRedirect();
 
     let { courseId } = useParams();
     const setCourse = useSetRecoilState(courseState);

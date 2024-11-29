@@ -1,7 +1,7 @@
 import useRoleRedirect from "../Hooks/useRoleRedirect";
 
 export const MyCourses = () => {
-  useRoleRedirect();
+  // useRoleRedirect();
   return (
     <div>MyCourses</div>
   )

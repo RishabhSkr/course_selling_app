@@ -21,7 +21,7 @@ import { MyCourses } from './UserFrontend/MyCourses.jsx';
 import { UserCourses } from './UserFrontend/UserCourses.jsx';
 import { SuperLogin } from './superfrontened/Login.jsx';
 import { SuperSignup } from './superfrontened/Signup.jsx';
-
+import  BillingInfo  from './UserFrontend/BillingInfo.jsx';
 function App() {
     
   
@@ -50,6 +50,7 @@ function App() {
                           <Route path={"/user/signin/"} element={<UserSignin />} />
                           <Route path={"/user/courses/"} element={<UserCourses />} />
                           <Route path={"/user/courses/purchased/"} element={<MyCourses />} />
+                          <Route path={"/user/billingInfo"} element={<BillingInfo />} />
                       </Routes>
                   </Router>
           </div>

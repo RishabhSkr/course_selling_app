@@ -12,7 +12,7 @@ import { adminEmailState } from '../store/selectors/adminEmail';
 import useRoleRedirect from '../Hooks/useRoleRedirect';
 
 function Courses() {
-  useRoleRedirect();
+  // useRoleRedirect();
   const [courses, setCourses] = useRecoilState(coursesState);
   const [showMyCourses, setShowMyCourses] = useState(false);
   const navigate = useNavigate();

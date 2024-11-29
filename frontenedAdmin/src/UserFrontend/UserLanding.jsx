@@ -5,10 +5,10 @@ import { userEmailState } from '../store/selectors/userEmail';
 import { useRecoilValue } from 'recoil';
 import { PropTypes } from 'prop-types';
 import { USER_IMAGE_URL } from '../utils/config';
-import useRoleRedirect from '../Hooks/useRoleRedirect';
+// import useRoleRedirect from '../Hooks/useRoleRedirect';
 
 export const LandingUser = () => {
-        useRoleRedirect();
+        // useRoleRedirect();
         const userMail = useRecoilValue(userEmailState)
         const navigate = useNavigate();
         return <Grid container style={{padding: "5vw"}}>

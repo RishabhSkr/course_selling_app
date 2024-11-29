@@ -7,7 +7,7 @@ import { adminEmailState } from '../store/selectors/adminEmail';
 import useRoleRedirect from '../Hooks/useRoleRedirect';
 
 export const LandingAdmin = () => {
-        useRoleRedirect();
+        // useRoleRedirect();
         
         const adminEmail = useRecoilValue(adminEmailState)
         const navigate = useNavigate();

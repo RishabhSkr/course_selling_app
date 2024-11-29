@@ -70,6 +70,7 @@
 ### User-Client
      - User Signup/ Signin implemented
      - created components Mycourses,Courses 
-     - created billing info
+     - created billing info Component
+     - 
 ### Super User
     - Login Sighup route is created

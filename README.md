@@ -1,6 +1,7 @@
 # MERN Stack Course Selling Website [Live Demo](https://course-selling-app-client.onrender.com "Live Demo")
-## Bug Due to not giving access to localStorage of renderer Some feature are not working that is Protecting route. Locally works fins.TODO-Resolve bug
-## Features 
+
+
+## Features
 - Role-Based Authentication:
     - Users can access features specific to their roles.
 - Admin Section
@@ -62,13 +63,4 @@
       - Created Course Card Component to see the course Details When Admin update the courses.
       - Set Updated the course To the DB and Fetch the details using API
       - Created Delete Button Course Option in each course to delete Course from DB
-      - Set MUI Loader  while Fetching the data from DB
-### User-client
-    - Login Signup 
-    - Routes - mycourses,courses
-    - logout
-    - user image hardcoded
-### Super User- client
-    - Routes Login/Signup
-    - Need to updated
-    
+      - Set MUI Loader  while Fetching the data from DB 
