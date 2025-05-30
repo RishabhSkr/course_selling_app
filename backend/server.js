@@ -19,15 +19,18 @@ const courseRoutes = require('./routes/course');
 
 
 // middleware 
-app.use(express.json()); // to parse json body
+app.use(express.json());
 app.use(cookieParser());
-app.use(
-    cors({
-        // origin: 'http://localhost:5173', // frontend link
-        origin: "https://course-selling-app-client.onrender.com",
-        credentials: true
-    })
-);
+
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production' 
+        ? ["https://course-selling-app-client.onrender.com"]
+        : ["http://localhost:5173"],
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
+
 app.use(
     fileUpload({
         useTempFiles: true,
@@ -36,7 +39,7 @@ app.use(
 )
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
     console.log(`Server Started on PORT ${PORT}`);
